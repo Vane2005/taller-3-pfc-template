@@ -6,6 +6,8 @@ import org.scalameter.withWarmer
 import org.scalameter.Warmer
 import org.scalameter.measure
 import org.scalameter.Warmer.Default
+import scala.collection.parallel.CollectionConverters._
+import scala.util.Random
 
 
 object App {
@@ -59,16 +61,53 @@ object App {
       println("Tiempo de ejecución de Strassen: " + comp10(0))
       println("Tiempo de ejecución de Strassen Paralelo: " + comp10(1))
 
+
     }
 
+    // Prueba de diferencia de tiempo para el producto punto 
+
+    def pruebasProductoPunto(): Unit = {
+      val v1 = mat1.vectorAlAzar(1000000,10)
+      val v2 = mat1.vectorAlAzar(1000000,10)
+      val v3 = mat1.vectorAlAzar(10,10)
+      val v4 = mat1.vectorAlAzar(10,10)
+      val comp = mat1.compararProdPunto(mat1.prodPunto, mat1.prodPuntoParD)(v1, v2)
+      val comp1 = mat1.compararProdPunto(mat1.prodPunto, mat1.prodPuntoParD)(v3, v4)
+      println("Tiempo de ejecución de Producto Punto (100000): " + comp(0))
+      println("Tiempo de ejecución de Producto Punto Paralelo (100000): " + comp(1))
+      println("Tiempo de ejecución de Producto Punto (10): " + comp1(0))
+      println("Tiempo de ejecución de Producto Punto Paralelo (10): " + comp1(1))
+    }
     /*val resultados = for {
       i <- 1 to 10
       m1 = mat1.matrizAlAzar(math.pow(2, i).toInt, 2)
       m2 = mat1.matrizAlAzar(math.pow(2, i).toInt, 2)
     } yield (mat1.compararAlgoritmos(mat1.multStrassen, mat1.multStrassenPar)(m1, m2),math.pow(2, i).toInt)
     }*/
-
+    val matriz7 = Vector(
+    Vector(1, 3, 5, 2, 4, 1, 3, 5),
+    Vector(4, 2, 1, 3, 5, 4, 2, 1),
+    Vector(2, 4, 1, 5, 3, 2, 4, 1),
+    Vector(5, 3, 2, 4, 1, 5, 3, 2),
+    Vector(1, 5, 3, 2, 4, 1, 5, 3),
+    Vector(4, 1, 5, 3, 2, 4, 1, 5),
+    Vector(2, 4, 1, 5, 3, 2, 4, 1),
+    Vector(3, 2, 4, 1, 5, 3, 2, 4)
+  )
+  val matriz8 = Vector(
+    Vector(1, 2, 3, 4, 5, 1, 2, 3),
+    Vector(4, 5, 1, 2, 3, 4, 5, 1),
+    Vector(3, 4, 5, 1, 2, 3, 4, 5),
+    Vector(2, 3, 4, 5, 1, 2, 3, 4),
+    Vector(5, 1, 2, 3, 4, 5, 1, 2),
+    Vector(1, 2, 3, 4, 5, 1, 2, 3),
+    Vector(4, 5, 1, 2, 3, 4, 5, 1),
+    Vector(3, 4, 5, 1, 2, 3, 4, 5)
+  )
+    pruebasProductoPunto()
     pruebas()
+    println("resta")
+    println(mat1.restaMatriz(matriz7, matriz8))
   }
 
   def greeting(): String = "Hello, world!"

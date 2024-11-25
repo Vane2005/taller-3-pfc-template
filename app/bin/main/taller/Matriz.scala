@@ -6,6 +6,8 @@ import org.scalameter.withWarmer
 import org.scalameter.Warmer
 import org.scalameter.measure
 import org.scalameter.Warmer.Default
+import scala.collection.parallel.immutable.ParVector
+import scala.collection.parallel.CollectionConverters._
 
 class MatrizOps(){
     
@@ -28,6 +30,10 @@ class MatrizOps(){
     def prodPunto(v1:Vector[Int], v2:Vector[Int]) : Int = {
         //Calcula el producto punto de dos vectores
         (v1 zip v2).map({case (i,j) => i*j}).sum
+    }
+
+    def prodPuntoParD(v1: ParVector [ Int ] ,v2: ParVector [ Int ]) : Int = {
+        (v1 zip v2).map({case (i,j) => (i * j)}).sum
     }
 
     def transpuesta(m:Matriz) : Matriz = {
@@ -54,6 +60,81 @@ class MatrizOps(){
         //se crea un vector de mismas dimensiones, donde i,j son sus indices
         //y se restan los valores de las matrices m1 y m2 en las posiciones i,j para llenar la matriz resultante
     }
+
+    def multMatrizRec(m1: Matriz, m2: Matriz): Matriz = {
+        val n = m1.length
+        if (n == 1) {
+            // Caso base: matrices de tamaño 1x1
+            Vector(Vector(m1(0)(0) * m2(0)(0)))
+        } else {
+            val mid = n / 2
+
+            // Dividimos las matrices en 4 submatrices
+            val (a11, a12, a21, a22) = (
+                subMatriz(m1, 0, 0, mid),
+                subMatriz(m1, 0, mid, mid),
+                subMatriz(m1, mid, 0, mid),
+                subMatriz(m1, mid, mid, mid)
+            )
+            val (b11, b12, b21, b22) = (
+                subMatriz(m2, 0, 0, mid),
+                subMatriz(m2, 0, mid, mid),
+                subMatriz(m2, mid, 0, mid),
+                subMatriz(m2, mid, mid, mid)
+            )
+
+            // Calculamos las submatrices de la matriz resultante
+            val c11 = sumMatriz(multMatrizRec(a11, b11), multMatrizRec(a12, b21))
+            val c12 = sumMatriz(multMatrizRec(a11, b12), multMatrizRec(a12, b22))
+            val c21 = sumMatriz(multMatrizRec(a21, b11), multMatrizRec(a22, b21))
+            val c22 = sumMatriz(multMatrizRec(a21, b12), multMatrizRec(a22, b22))
+
+            // Combinamos las submatrices para formar la matriz completa
+            val top = c11.zip(c12).map { case (left, right) => left ++ right }
+            val bottom = c21.zip(c22).map { case (left, right) => left ++ right }
+            top ++ bottom
+            }
+        }
+
+    def multMatrizRecPar(m1: Matriz, m2: Matriz): Matriz = {
+        val n = m1.length
+        val umbral = 16  // Establecemos un umbral para evitar paralelización innecesaria en matrices pequeñas
+
+        if (n <= umbral) {
+            // Caso base: cuando la matriz es lo suficientemente pequeña, calculamos de manera secuencial
+            multMatrizRec(m1, m2)  // Usamos la función recursiva secuencial como base
+        } else {
+            val mid = n / 2
+
+            // Dividimos las matrices en submatrices
+            val (a11, a12, a21, a22) = (
+                subMatriz(m1, 0, 0, mid),
+                subMatriz(m1, 0, mid, mid),
+                subMatriz(m1, mid, 0, mid),
+                subMatriz(m1, mid, mid, mid)
+            )
+            val (b11, b12, b21, b22) = (
+                subMatriz(m2, 0, 0, mid),
+                subMatriz(m2, 0, mid, mid),
+                subMatriz(m2, mid, 0, mid),
+                subMatriz(m2, mid, mid, mid)
+            )
+
+            // Paralelizamos las multiplicaciones de las submatrices
+            val (c11, c12, c21, c22) = parallel(
+                sumMatriz(multMatrizRecPar(a11, b11), multMatrizRecPar(a12, b21)),
+                sumMatriz(multMatrizRecPar(a11, b12), multMatrizRecPar(a12, b22)),
+                sumMatriz(multMatrizRecPar(a21, b11), multMatrizRecPar(a22, b21)),
+                sumMatriz(multMatrizRecPar(a21, b12), multMatrizRecPar(a22, b22))
+            )
+
+            // Combinamos las submatrices para formar la matriz resultante
+            val top = c11.zip(c12).map { case (left, right) => left ++ right }
+            val bottom = c21.zip(c22).map { case (left, right) => left ++ right }
+            top ++ bottom
+        }
+    }
+
 
     def multStrassen(m1:Matriz,m2:Matriz):Matriz={
         //Multiplicación de matrices por el método de Strassen
@@ -133,6 +214,15 @@ class MatrizOps(){
     def compararAlgoritmos(f1 : (Matriz, Matriz) => Matriz,f2 : (Matriz, Matriz) => Matriz)(m1:Matriz, m2:Matriz): List[Double] = {
         val timef1 = withWarmer(new Default) measure{f1(m1,m2)}
         val timef2 = withWarmer(new Default) measure{f2(m1,m2)}
+
+        List(timef1.value, timef2.value, timef1.value / timef2.value)
+    }
+
+    //Comparacion de producto punto secuencial y paralelo
+
+    def compararProdPunto(f1 : (Vector[Int], Vector[Int]) => Int, f2 : (ParVector[Int], ParVector[Int]) => Int)(v1:Vector[Int], v2:Vector[Int]): List[Double] = {
+        val timef1 = withWarmer(new Default) measure{f1(v1,v2)}
+        val timef2 = withWarmer(new Default) measure{f2(v1.par,v2.par)}
 
         List(timef1.value, timef2.value, timef1.value / timef2.value)
     }
