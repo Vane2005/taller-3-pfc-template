@@ -84,30 +84,10 @@ object App {
       m2 = mat1.matrizAlAzar(math.pow(2, i).toInt, 2)
     } yield (mat1.compararAlgoritmos(mat1.multStrassen, mat1.multStrassenPar)(m1, m2),math.pow(2, i).toInt)
     }*/
-    val matriz7 = Vector(
-    Vector(1, 3, 5, 2, 4, 1, 3, 5),
-    Vector(4, 2, 1, 3, 5, 4, 2, 1),
-    Vector(2, 4, 1, 5, 3, 2, 4, 1),
-    Vector(5, 3, 2, 4, 1, 5, 3, 2),
-    Vector(1, 5, 3, 2, 4, 1, 5, 3),
-    Vector(4, 1, 5, 3, 2, 4, 1, 5),
-    Vector(2, 4, 1, 5, 3, 2, 4, 1),
-    Vector(3, 2, 4, 1, 5, 3, 2, 4)
-  )
-  val matriz8 = Vector(
-    Vector(1, 2, 3, 4, 5, 1, 2, 3),
-    Vector(4, 5, 1, 2, 3, 4, 5, 1),
-    Vector(3, 4, 5, 1, 2, 3, 4, 5),
-    Vector(2, 3, 4, 5, 1, 2, 3, 4),
-    Vector(5, 1, 2, 3, 4, 5, 1, 2),
-    Vector(1, 2, 3, 4, 5, 1, 2, 3),
-    Vector(4, 5, 1, 2, 3, 4, 5, 1),
-    Vector(3, 4, 5, 1, 2, 3, 4, 5)
-  )
+
     pruebasProductoPunto()
     pruebas()
-    println("resta")
-    println(mat1.restaMatriz(matriz7, matriz8))
+ 
   }
 
   def greeting(): String = "Hello, world!"
