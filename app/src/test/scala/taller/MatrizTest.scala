@@ -251,4 +251,118 @@ class MatrizTest extends AnyFunSuite {
   test("el producto punto de los vectores Vector(1,2,3,4,5,6,7,8,9) y Vector(10,11,12,13,14,15,16,17,18) es 690") {
     assert(objMatriz.prodPuntoParD(Vector(1,2,3,4,5,6,7,8,9).par, Vector(10,11,12,13,14,15,16,17,18).par) == 690)
   }
+
+
+  //Test de transpuesta
+  test("La transpuesta de la matriz 4x4 Vector(Vector(1,2,3,4),Vector(5,6,7,8),Vector(9,10,11,12),Vector(13,14,15,16)) es") {
+    assert(objMatriz.transpuesta(Vector(Vector(1,2,3,4),Vector(5,6,7,8),Vector(9,10,11,12),Vector(13,14,15,16))) == Vector(Vector(1,5,9,13),Vector(2,6,10,14),Vector(3,7,11,15),Vector(4,8,12,16)))
+  }
+
+  test("La transpuesta de la matriz 3x3 Vector(Vector(1,2,3),Vector(4,5,6),Vector(7,8,9)) es") {
+    assert(objMatriz.transpuesta(Vector(Vector(1,2,3),Vector(4,5,6),Vector(7,8,9))) == Vector(Vector(1,4,7),Vector(2,5,8),Vector(3,6,9)))
+  }
+
+  test("La transpuesta de la matriz 8x8 Vector(Vector(1, 5, 3, 2, 4, 1, 5, 3), Vector(2, 4, 1, 5, 3, 2, 4, 1), Vector(5, 3, 2, 4, 1, 5, 3, 2), Vector(4, 1, 5, 3, 2, 4, 1, 5), Vector(3, 2, 4, 1, 5, 3, 2, 4), Vector(1, 5, 3, 2, 4, 1, 5, 3), Vector(2, 4, 1, 5, 3, 2, 4, 1), Vector(5, 3, 2, 4, 1, 5, 3, 2)) es") {
+    assert(objMatriz.transpuesta(matriz3) == Vector(
+      Vector(1, 2, 5, 4, 3, 1, 2, 5),
+      Vector(5, 4, 3, 1, 2, 5, 4, 3),
+      Vector(3, 1, 2, 5, 4, 3, 1, 2),
+      Vector(2, 5, 4, 3, 1, 2, 5, 4),
+      Vector(4, 3, 1, 2, 5, 4, 3, 1),
+      Vector(1, 2, 5, 4, 3, 1, 2, 5),
+      Vector(5, 4, 3, 1, 2, 5, 4, 3),
+      Vector(3, 1, 2, 5, 4, 3, 1, 2)
+    ))
+    }
+    //Test de matriz traspuesta de una fila
+    test("La transpuesta de la matriz 1x5 Vector(Vector(1,2,3,4,5)) es") {
+      assert(objMatriz.transpuesta(Vector(Vector(1,2,3,4,5))) == Vector(Vector(1),Vector(2),Vector(3),Vector(4),Vector(5)))
+    }
+    //Test de matriz traspuesta de una columna
+    test("La transpuesta de la matriz 5x1 Vector(Vector(1),Vector(2),Vector(3),Vector(4),Vector(5)) es") {
+      assert(objMatriz.transpuesta(Vector(Vector(1),Vector(2),Vector(3),Vector(4),Vector(5))) == Vector(Vector(1,2,3,4,5)))
+    }
+
+    //Test para la funcion subMatriz
+    test("La submatriz 2x2 de matriz1 comenzando en (0,0) es") {
+      assert(objMatriz.subMatriz(matriz1, 0, 0, 2) == Vector(Vector(1, 2), Vector(5, 6))) 
+    }
+
+    test("La submatriz 2x2 de matriz2 comenzando en (1,1) es") {
+      assert(objMatriz.subMatriz(matriz2, 1, 1, 2) == Vector(Vector(11, 10), Vector(7, 6)))
+    }
+
+    test("La submatriz 4x4 de matriz4 comenzando en (0,0) es") {
+      assert(objMatriz.subMatriz(matriz4, 0, 0, 4) == Vector(Vector(1, 2, 3, 4), Vector(3, 4, 5, 1), Vector(2, 3, 4, 5), Vector(5, 1, 2, 3)))
+    }
+
+    test("La submatriz 1x1 de matriz1 en la posición (1,1) es") {
+      assert(objMatriz.subMatriz(matriz1, 1, 1, 1) == Vector(Vector(6)))
+    }
+
+    test("La submatriz 4x4 de matriz5 comenzando en (2,2) es") {
+      assert(objMatriz.subMatriz(matriz5, 2, 2, 4) == Vector(
+        Vector(5, 1, 2, 3),
+        Vector(1, 2, 3, 4),
+        Vector(2, 3, 4, 5),
+        Vector(3, 4, 5, 1)
+      ))
+    }
+
+    //Test para la funcion sumaMatriz
+    test("La suma de matriz11 y matriz12 es") {
+      assert(objMatriz.sumMatriz(matriz11, matriz12) == Vector(Vector(5, 5), Vector(5, 5)))
+    }
+
+    test("La suma de matriz1 y matriz2 es") {
+      assert(objMatriz.sumMatriz(matriz1, matriz2) == Vector(
+        Vector(17, 17, 17, 17),
+        Vector(17, 17, 17, 17),
+        Vector(17, 17, 17, 17),
+        Vector(17, 17, 17, 17)
+      ))
+    }
+    test("Suma de matriz3 y matriz4 dará como resultado Vector(Vector(2, 7, 6, 6, 9, 2, 7, 6), Vector(5, 8, 6, 6, 5, 5, 8, 6), Vector(7, 6, 6, 9, 2, 7, 6, 6), Vector(9, 2, 7, 6, 6, 9, 2, 7), Vector(7, 7, 5, 3, 8, 7, 7, 5), Vector(2, 7, 6, 6, 9, 2, 7, 6), Vector(5, 8, 6, 6, 5, 5, 8, 6), Vector(7, 6, 6, 9, 2, 7, 6, 6)))") {
+      assert(objMatriz.sumMatriz(matriz3, matriz4) == Vector(
+          Vector(2, 7, 6, 6, 9, 2, 7, 6),
+          Vector(5, 8, 6, 6, 5, 5, 8, 6),
+          Vector(7, 6, 6, 9, 2, 7, 6, 6),
+          Vector(9, 2, 7, 6, 6, 9, 2, 7),
+          Vector(7, 7, 5, 3, 8, 7, 7, 5),
+          Vector(2, 7, 6, 6, 9, 2, 7, 6),
+          Vector(5, 8, 6, 6, 5, 5, 8, 6),
+          Vector(7, 6, 6, 9, 2, 7, 6, 6)))
+    }
+
+    test("la suma de matriz7 y matriz8 ") {
+      assert(objMatriz.sumMatriz(matriz7, matriz8) == Vector(
+          Vector(2, 5, 8, 6, 9, 2, 5, 8), 
+          Vector(8, 7, 2, 5, 8, 8, 7, 2), 
+          Vector(5, 8, 6, 6, 5, 5, 8, 6), 
+          Vector(7, 6, 6, 9, 2, 7, 6, 6), 
+          Vector(6, 6, 5, 5, 8, 6, 6, 5), 
+          Vector(5, 3, 8, 7, 7, 5, 3, 8), 
+          Vector(6, 9, 2, 7, 6, 6, 9, 2), 
+          Vector(6, 6, 9, 2, 7, 6, 6, 9)))
+    }
+
+    test("La suma de matriz5 y matriz6") {
+      assert(objMatriz.sumMatriz(matriz5, matriz6) == Vector(
+        Vector(2, 7, 6, 6, 9, 2, 7, 6, 6, 9, 2, 7, 6, 6, 9, 2), 
+        Vector(6, 4, 9, 8, 3, 6, 4, 9, 8, 3, 6, 4, 9, 8, 3, 6), 
+        Vector(5, 8, 6, 6, 5, 5, 8, 6, 6, 5, 5, 8, 6, 6, 5, 5), 
+        Vector(7, 7, 5, 3, 8, 7, 7, 5, 3, 8, 7, 7, 5, 3, 8, 7), 
+        Vector(10, 4, 4, 7, 5, 10, 4, 4, 7, 5, 10, 4, 4, 7, 5, 10), 
+        Vector(2, 7, 6, 6, 9, 2, 7, 6, 6, 9, 2, 7, 6, 6, 9, 2), 
+        Vector(6, 4, 9, 8, 3, 6, 4, 9, 8, 3, 6, 4, 9, 8, 3, 6), 
+        Vector(5, 8, 6, 6, 5, 5, 8, 6, 6, 5, 5, 8, 6, 6, 5, 5), 
+        Vector(7, 7, 5, 3, 8, 7, 7, 5, 3, 8, 7, 7, 5, 3, 8, 7), 
+        Vector(10, 4, 4, 7, 5, 10, 4, 4, 7, 5, 10, 4, 4, 7, 5, 10), 
+        Vector(2, 7, 6, 6, 9, 2, 7, 6, 6, 9, 2, 7, 6, 6, 9, 2), 
+        Vector(6, 4, 9, 8, 3, 6, 4, 9, 8, 3, 6, 4, 9, 8, 3, 6), 
+        Vector(5, 8, 6, 6, 5, 5, 8, 6, 6, 5, 5, 8, 6, 6, 5, 5), 
+        Vector(7, 7, 5, 3, 8, 7, 7, 5, 3, 8, 7, 7, 5, 3, 8, 7), 
+        Vector(10, 4, 4, 7, 5, 10, 4, 4, 7, 5, 10, 4, 4, 7, 5, 10), 
+        Vector(2, 7, 6, 6, 9, 2, 7, 6, 6, 9, 2, 7, 6, 6, 9, 2)))
+    }
 }

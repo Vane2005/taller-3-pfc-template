@@ -36,9 +36,14 @@ class MatrizOps(){
         (v1 zip v2).map({case (i,j) => (i * j)}).sum
     }
 
-    def transpuesta(m:Matriz) : Matriz = {
+    /* def transpuesta(m:Matriz) : Matriz = {
         val l = m.length
         Vector.tabulate(l,l)((i,j) => m(j)(i))
+    } */
+    def transpuesta(m: Matriz): Matriz = {
+        val filas = m.length
+        val columnas = if (filas > 0) m(0).length else 0
+        Vector.tabulate(columnas, filas)((i, j) => m(j)(i))
     }
 
     def subMatriz(m:Matriz, i:Int, j:Int, l:Int) : Matriz = {
