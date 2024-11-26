@@ -232,4 +232,17 @@ class MatrizOps(){
         List(timef1.value, timef2.value, timef1.value / timef2.value)
     }
 
+    // Multiplicación de matrices - Versión estándar y paralela
+
+    def multMatrizEstandar(m1: Matriz, m2: Matriz): Matriz = {
+        val m2T = transpuesta(m2) // Transponemos m2 para optimizar el acceso a columnas
+        m1.map(row => m2T.map(col => prodPunto(row, col))) //Se utiliza el metodo map para iterar sobre cada fila de m1. Para cada fila de m1, se aplica otro map sobre las filas de m2T y se calcula el producto punto entre la fila de m1 y la fila de m2T
+    }
+
+    def multMatrizEstandarPar(m1: Matriz, m2: Matriz): Matriz = {
+        val m2T = transpuesta(m2) // Transponemos m2
+        m1.par.map(row => m2T.par.map(col => prodPuntoParD(row.par, col.par)).toVector).toVector //Se usa par para paralelizar el cálculo de las filas de la matriz resultante y se convierte el resultado a Vector para obtener una matriz de tipo Vector[Vector[Int]]
+    }
+
+
 }
