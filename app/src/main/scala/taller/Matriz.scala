@@ -234,7 +234,7 @@ class MatrizOps(){
 
     // Multiplicación de matrices - Versión estándar y paralela
 
-    def multMatrizEstandar(m1: Matriz, m2: Matriz): Matriz = {
+    def multMatrizEstandarSec(m1: Matriz, m2: Matriz): Matriz = {
         val m2T = transpuesta(m2) // Transponemos m2 para optimizar el acceso a columnas
         m1.map(row => m2T.map(col => prodPunto(row, col))) //Se utiliza el metodo map para iterar sobre cada fila de m1. Para cada fila de m1, se aplica otro map sobre las filas de m2T y se calcula el producto punto entre la fila de m1 y la fila de m2T
     }

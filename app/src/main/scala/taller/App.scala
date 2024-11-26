@@ -65,7 +65,6 @@ object App {
     }
 
     // Prueba de diferencia de tiempo para el producto punto 
-
     def pruebasProductoPunto(): Unit = {
       val v1 = mat1.vectorAlAzar(1000000,10)
       val v2 = mat1.vectorAlAzar(1000000,10)
@@ -85,9 +84,45 @@ object App {
     } yield (mat1.compararAlgoritmos(mat1.multStrassen, mat1.multStrassenPar)(m1, m2),math.pow(2, i).toInt)
     }*/
 
+    //Pruebas - Comparación de desempeño de algoritmo de multiplicación estandar y su versión paralela
+    def pruebasMultiplicacionEstandar(): Unit = {
+      println("1. Multiplicacion Estandar 32x32")
+      println("Matriz 1: ")
+      val E1 = mat1.matrizAlAzar(32, 32)
+      E1.foreach(row => println(row))
+      println("Matriz 2: ")
+      val E2 = mat1.matrizAlAzar(32, 32)
+      E2.foreach(row => println(row))
+      val comp = mat1.compararAlgoritmos(mat1.multMatrizEstandarSec, mat1.multMatrizEstandarPar)(E1, E2)
+      println("Tiempo de ejecución de Multiplicación Estandar: " + comp(0))
+      println("Tiempo de ejecución de Multiplicación Estandar Paralelo: " + comp(1))
+
+      println("2. Multiplicacion Estandar 16x16")
+      println("Matriz 1: ")
+      val E3 = mat1.matrizAlAzar(16, 16)
+      E3.foreach(row => println(row))
+      println("Matriz 2: ")
+      val E4 = mat1.matrizAlAzar(16, 16)
+      E4.foreach(row => println(row))
+      val comp1 = mat1.compararAlgoritmos(mat1.multMatrizEstandarSec, mat1.multMatrizEstandarPar)(E3, E4)
+      println("Tiempo de ejecución de Multiplicación Estandar: " + comp1(0))
+      println("Tiempo de ejecución de Multiplicación Estandar Paralelo: " + comp1(1))
+
+      println("3. Multiplicacion Estandar 4x4")
+      println("Matriz 1: ")
+      val E5 = mat1.matrizAlAzar(4, 4)
+      E5.foreach(row => println(row))
+      println("Matriz 2: ")
+      val E6 = mat1.matrizAlAzar(4, 4)
+      E6.foreach(row => println(row))
+      val comp2 = mat1.compararAlgoritmos(mat1.multMatrizEstandarSec, mat1.multMatrizEstandarPar)(E5, E6)
+      println("Tiempo de ejecución de Multiplicación Estandar: " + comp2(0))
+      println("Tiempo de ejecución de Multiplicación Estandar Paralelo: " + comp2(1))
+    }
+
+    pruebasMultiplicacionEstandar()
     pruebasProductoPunto()
     pruebas()
- 
   }
 
   def greeting(): String = "Hello, world!"

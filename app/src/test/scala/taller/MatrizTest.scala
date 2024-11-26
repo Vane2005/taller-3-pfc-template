@@ -15,8 +15,17 @@ class MatrizTest extends AnyFunSuite {
   val matriz12 = Vector(Vector(4, 3), Vector(2, 1))
 
   //matrices de tamaño 4x4
-  val matriz1 = Vector(Vector(1, 2, 3,4), Vector(5, 6, 7, 8), Vector(9, 10, 11, 12), Vector(13, 14, 15, 16))
-  val matriz2 = Vector(Vector(16,15,14,13), Vector(12,11,10,9), Vector(8,7,6,5), Vector(4,3,2,1))
+  val matriz1 = Vector(
+    Vector(1, 2, 3,4), 
+    Vector(5, 6, 7, 8), 
+    Vector(9, 10, 11, 12), 
+    Vector(13, 14, 15, 16))
+
+  val matriz2 = Vector(
+    Vector(16,15,14,13), 
+    Vector(12,11,10,9), 
+    Vector(8,7,6,5),
+    Vector(4,3,2,1))
 
   //matrices de tamaño 8x8
   val matriz3 = Vector(
@@ -389,7 +398,7 @@ class MatrizTest extends AnyFunSuite {
 
     //Tests para la funcion multMatrizEstandar
     test("La multiplicación de matriz1 y matriz2") {
-      assert(objMatriz.multMatrizEstandar(matriz1, matriz2) == Vector(
+      assert(objMatriz.multMatrizEstandarSec(matriz1, matriz2) == Vector(
         Vector(80, 70, 60, 50),
         Vector(240, 214, 188, 162),
         Vector(400, 358, 316, 274),
@@ -397,7 +406,7 @@ class MatrizTest extends AnyFunSuite {
     }
 
     test("La multiplicación de matriz3 y matriz4") {
-      assert(objMatriz.multMatrizEstandar(matriz3, matriz4) == Vector(
+      assert(objMatriz.multMatrizEstandarSec(matriz3, matriz4) == Vector(
         Vector(70, 84, 88, 62, 56, 70, 84, 88),
         Vector(69, 66, 73, 55, 67, 69, 66, 73),
         Vector(60, 65, 85, 80, 85, 60, 65, 85),
@@ -409,7 +418,7 @@ class MatrizTest extends AnyFunSuite {
     }
 
     test("La multiplicación de matriz5 y matriz6") {
-      assert(objMatriz.multMatrizEstandar(matriz5, matriz6) == Vector(
+      assert(objMatriz.multMatrizEstandarSec(matriz5, matriz6) == Vector(
         Vector(157, 131, 129, 143, 130, 157, 131, 129, 143, 130, 157, 131, 129, 143, 130, 157),
         Vector(128, 136, 147, 130, 164, 128, 136, 147, 130, 164, 128, 136, 147, 130, 164, 128),
         Vector(129, 156, 135, 162, 138, 129, 156, 135, 162, 138, 129, 156, 135, 162, 138, 129),
@@ -429,7 +438,7 @@ class MatrizTest extends AnyFunSuite {
     }
 
     test("La multiplicación de matriz7 y matriz8") {
-      assert(objMatriz.multMatrizEstandar(matriz7, matriz8) == Vector(
+      assert(objMatriz.multMatrizEstandarSec(matriz7, matriz8) == Vector(
         Vector(80, 84, 78, 52, 66, 80, 84, 78),
         Vector(61, 58, 60, 72, 79, 61, 58, 60),
         Vector(67, 74, 56, 68, 65, 67, 74, 56),
@@ -442,7 +451,7 @@ class MatrizTest extends AnyFunSuite {
     }
 
     test("La multiplicacion de matriz9 y matriz10") {
-      assert(objMatriz.multMatrizEstandar(matriz9, matriz10) == Vector(
+      assert(objMatriz.multMatrizEstandarSec(matriz9, matriz10) == Vector(
         Vector(812, 840, 868, 896, 924, 952, 980), 
         Vector(1890, 1967, 2044, 2121, 2198, 2275, 2352), 
         Vector(2968, 3094, 3220, 3346, 3472, 3598, 3724), 
@@ -453,5 +462,62 @@ class MatrizTest extends AnyFunSuite {
     }
 
     //Tests para la funcion multMatrizEstandarPar
+    test("Multiplicar la matriz11 por la matriz12 usando multMatrizEstandarpar") {
+      assert(objMatriz.multMatrizEstandarPar(matriz11, matriz12) == Vector(Vector(8, 5), Vector(20, 13)))
+    }
+
+    test("Multiplicar la matriz1 por la matriz2 usando multMatrizEstandarpar") {
+      assert(objMatriz.multMatrizEstandarPar(matriz1, matriz2) == Vector(
+        Vector(80, 70, 60, 50),
+        Vector(240, 214, 188, 162),
+        Vector(400, 358, 316, 274),
+        Vector(560, 502, 444, 386)
+      ))
+    }
+
+    test("Multiplicar la matriz3 por la matriz4 usando multMatrizEstandarpar") {
+      assert(objMatriz.multMatrizEstandarPar(matriz3, matriz4) == Vector(
+        Vector(70, 84, 88, 62, 56, 70, 84, 88), 
+        Vector(69, 66, 73, 55, 67, 69, 66, 73), 
+        Vector(60, 65, 85, 80, 85, 60, 65, 85), 
+        Vector(57, 67, 82, 97, 72, 57, 67, 82), 
+        Vector(59, 78, 77, 81, 65, 59, 78, 77), 
+        Vector(70, 84, 88, 62, 56, 70, 84, 88), 
+        Vector(69, 66, 73, 55, 67, 69, 66, 73), 
+        Vector(60, 65, 85, 80, 85, 60, 65, 85)))
+    }
+
+    test("Multiplicar la matriz5 por la matriz6 usando multMatrizEstandarpar") {
+      assert(objMatriz.multMatrizEstandarPar(matriz5, matriz6) == Vector(
+        Vector(157, 131, 129, 143, 130, 157, 131, 129, 143, 130, 157, 131, 129, 143, 130, 157), 
+        Vector(128, 136, 147, 130, 164, 128, 136, 147, 130, 164, 128, 136, 147, 130, 164, 128), 
+        Vector(129, 156, 135, 162, 138, 129, 156, 135, 162, 138, 129, 156, 135, 162, 138, 129), 
+        Vector(145, 146, 168, 134, 142, 145, 146, 168, 134, 142, 145, 146, 168, 134, 142, 145), 
+        Vector(131, 181, 141, 136, 161, 131, 181, 141, 136, 161, 131, 181, 141, 136, 161, 131), 
+        Vector(157, 131, 129, 143, 130, 157, 131, 129, 143, 130, 157, 131, 129, 143, 130, 157), 
+        Vector(128, 136, 147, 130, 164, 128, 136, 147, 130, 164, 128, 136, 147, 130, 164, 128), 
+        Vector(129, 156, 135, 162, 138, 129, 156, 135, 162, 138, 129, 156, 135, 162, 138, 129), 
+        Vector(145, 146, 168, 134, 142, 145, 146, 168, 134, 142, 145, 146, 168, 134, 142, 145), 
+        Vector(131, 181, 141, 136, 161, 131, 181, 141, 136, 161, 131, 181, 141, 136, 161, 131), 
+        Vector(157, 131, 129, 143, 130, 157, 131, 129, 143, 130, 157, 131, 129, 143, 130, 157), 
+        Vector(128, 136, 147, 130, 164, 128, 136, 147, 130, 164, 128, 136, 147, 130, 164, 128), 
+        Vector(129, 156, 135, 162, 138, 129, 156, 135, 162, 138, 129, 156, 135, 162, 138, 129), 
+        Vector(145, 146, 168, 134, 142, 145, 146, 168, 134, 142, 145, 146, 168, 134, 142, 145), 
+        Vector(131, 181, 141, 136, 161, 131, 181, 141, 136, 161, 131, 181, 141, 136, 161, 131), 
+        Vector(157, 131, 129, 143, 130, 157, 131, 129, 143, 130, 157, 131, 129, 143, 130, 157)))
+    }
+
+
+    test("Multiplicar la matriz7 por la matriz8 usando multMatrizEstandarpar") {
+      assert(objMatriz.multMatrizEstandarPar(matriz7, matriz8) == Vector(
+        Vector(80, 84, 78, 52, 66, 80, 84, 78), 
+        Vector(61, 58, 60, 72, 79, 61, 58, 60), 
+        Vector(67, 74, 56, 68, 65, 67, 74, 56), 
+        Vector(59, 79, 74, 79, 84, 59, 79, 74), 
+        Vector(84, 88, 62, 56, 70, 84, 88, 62), 
+        Vector(62, 77, 92, 67, 77, 62, 77, 92), 
+        Vector(67, 74, 56, 68, 65, 67, 74, 56), 
+        Vector(73, 72, 76, 60, 79, 73, 72, 76)))
+    }
 
 }
