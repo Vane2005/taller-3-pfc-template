@@ -154,6 +154,7 @@ class MatrizTest extends AnyFunSuite {
   }
 
   //Multiplicando matrices recursivamente, version secuencial
+
   test("Multiplicar la matriz11 por la matriz12 dará como resultado Vector(Vector(8,5), Vector(20,13))") {
     assert(objMatriz.multMatrizRec(matriz11, matriz12) == Vector(Vector(8,5), Vector(20,13)))
   }
@@ -175,6 +176,7 @@ class MatrizTest extends AnyFunSuite {
   }
 
   //Multiplicando matrices recursivamente, version paralela
+
   test("multiplicar la matriz11 por la matriz12 dará como resultado Vector(Vector(8,5), Vector(20,13))") {
     assert(objMatriz.multMatrizRecPar(matriz11, matriz12) == Vector(Vector(8,5), Vector(20,13)))
   }
@@ -196,6 +198,7 @@ class MatrizTest extends AnyFunSuite {
   }
 
   //Multiplicaciones con el algoritmo de Strassen
+
   test("multiplicar la matriz11 por la matriz12 dará como resultado: Vector(Vector(8,5), Vector(20,13))") {
     assert(objMatriz.multStrassen(matriz11, matriz12) == Vector(Vector(8,5), Vector(20,13)))
   }
@@ -218,6 +221,7 @@ class MatrizTest extends AnyFunSuite {
   }
 
   //Multiplicaciones con el algoritmo de Strassen Paralelizado
+
   test("Multiplicar la matriz11 por la matriz12 dará como resultado: Vector(Vector(8,5), Vector(20,13))") {
     assert(objMatriz.multStrassenPar(matriz11, matriz12) == Vector(Vector(8,5), Vector(20,13)))
   }
@@ -240,6 +244,7 @@ class MatrizTest extends AnyFunSuite {
   }  
 
   //Producto punto
+
   test("El producto punto de los vectores Vector(1,2,3,4,5) y Vector(6,7,8,9,10) es 130") {
     assert(objMatriz.prodPunto(Vector(1,2,3,4,5), Vector(6,7,8,9,10)) == 130)
   }
@@ -284,6 +289,7 @@ class MatrizTest extends AnyFunSuite {
 
 
   //Test de transpuesta
+
   test("La transpuesta de la matriz 4x4 Vector(Vector(1,2,3,4),Vector(5,6,7,8),Vector(9,10,11,12),Vector(13,14,15,16)) es") {
     assert(objMatriz.transpuesta(Vector(Vector(1,2,3,4),Vector(5,6,7,8),Vector(9,10,11,12),Vector(13,14,15,16))) == Vector(Vector(1,5,9,13),Vector(2,6,10,14),Vector(3,7,11,15),Vector(4,8,12,16)))
   }
@@ -340,6 +346,7 @@ class MatrizTest extends AnyFunSuite {
     }
 
     //Test para la funcion sumaMatriz
+
     test("La suma de matriz11 y matriz12 es") {
       assert(objMatriz.sumMatriz(matriz11, matriz12) == Vector(Vector(5, 5), Vector(5, 5)))
     }
@@ -397,6 +404,7 @@ class MatrizTest extends AnyFunSuite {
     }
 
     //Tests para la funcion multMatrizEstandar
+
     test("La multiplicación de matriz1 y matriz2") {
       assert(objMatriz.multMatrizEstandarSec(matriz1, matriz2) == Vector(
         Vector(80, 70, 60, 50),
@@ -462,6 +470,7 @@ class MatrizTest extends AnyFunSuite {
     }
 
     //Tests para la funcion multMatrizEstandarPar
+    
     test("Multiplicar la matriz11 por la matriz12 usando multMatrizEstandarpar") {
       assert(objMatriz.multMatrizEstandarPar(matriz11, matriz12) == Vector(Vector(8, 5), Vector(20, 13)))
     }

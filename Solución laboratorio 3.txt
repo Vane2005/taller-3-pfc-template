@@ -1,0 +1,51 @@
+Solución laboratorio 3
+
+Integrantes: Juan Damián Cuervo Buitrago– 2359413
+Juan Sebastián Rodas Ramírez– 2359681
+Vanessa Alexandra Durán Mona– 2359394
+
+Punto 1:
+
+select p.apellido, p.nombre, p.cedula, p.fecha_nto
+from paciente p inner join especialidad e on p.especialidad = e.codigo
+where e.nombre = 'Cardiologia' AND p.fecha_nto between '1988-07-01' AND '1988-12-31'
+order by p.apellido, p.nombre 
+
+Punto 2:
+
+select descripcion, count(*)
+from estado e inner join paciente p on
+e.codigo = p.estado
+group by codigo
+
+Punto 3:
+
+select p.apellido, p.nombre, c.nombre as nombreClinica, e.nombre as especialidad
+from (paciente p inner join especialidad e on p.especialidad = e.codigo) inner join clinica c on e.clinica=c.codigo
+where c.nombre in ('Centro', 'Sur')
+order by c.nombre, e.nombre 
+
+Punto 4:
+
+select cedula, fecha_nto, descripcion
+from paciente p inner join estado e on
+p.estado = e.codigo 
+order by fecha_nto desc
+
+Punto 5:
+
+SELECT *
+FROM PACIENTE
+WHERE Apellido ilike '%k%'
+
+Punto 6:
+
+select esp.nombre
+from paciente p inner join especialidad esp on p.especialidad = esp.codigo 
+where p.estado in (
+	select es.codigo
+	from estado es inner join paciente p on es.codigo = p.estado
+	where es.descripcion = 'Activo'
+)
+group by esp.nombre
+having avg(p.estrato) > 3

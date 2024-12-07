@@ -36,9 +36,10 @@ class MatrizOps(){
         (v1 zip v2).map({case (i,j) => (i * j)}).sum
     }
 
-    def transpuesta(m:Matriz) : Matriz = {
-        val l = m.length
-        Vector.tabulate(l,l)((i,j) => m(j)(i))
+    def transpuesta(m: Matriz): Matriz = {
+        val filas = m.length
+        val columnas = if (filas > 0) m(0).length else 0
+        Vector.tabulate(columnas, filas)((i, j) => m(j)(i))
     }
 
     def subMatriz(m:Matriz, i:Int, j:Int, l:Int) : Matriz = {
@@ -96,13 +97,13 @@ class MatrizOps(){
             }
         }
 
-    def multMatrizRecPar(m1: Matriz, m2: Matriz): Matriz = {
-        val n = m1.length
-        val umbral = 16  // Establecemos un umbral para evitar paralelización innecesaria en matrices pequeñas
+    def multMatrizRecPar(m1: Matriz, m2: Matriz): Matriz = {   
 
-        if (n <= umbral) {
-            // Caso base: cuando la matriz es lo suficientemente pequeña, calculamos de manera secuencial
-            multMatrizRec(m1, m2)  // Usamos la función recursiva secuencial como base
+        val n = m1.length
+        
+        // Caso base: cuando la matriz es de tamaño 1x1
+        if (n == 1) {
+            Vector(Vector(m1(0)(0) * m2(0)(0)))
         } else {
             val mid = n / 2
 
@@ -226,5 +227,18 @@ class MatrizOps(){
 
         List(timef1.value, timef2.value, timef1.value / timef2.value)
     }
+
+    // Multiplicación de matrices - Versión estándar y paralela
+
+    def multMatrizEstandarSec(m1: Matriz, m2: Matriz): Matriz = {
+        val m2T = transpuesta(m2) // Transponemos m2 para optimizar el acceso a columnas
+        m1.map(row => m2T.map(col => prodPunto(row, col))) //Se utiliza el metodo map para iterar sobre cada fila de m1. Para cada fila de m1, se aplica otro map sobre las filas de m2T y se calcula el producto punto entre la fila de m1 y la fila de m2T
+    }
+
+    def multMatrizEstandarPar(m1: Matriz, m2: Matriz): Matriz = {
+        val m2T = transpuesta(m2) // Transponemos m2
+        m1.par.map(row => m2T.par.map(col => prodPuntoParD(row.par, col.par)).toVector).toVector //Se usa par para paralelizar el cálculo de las filas de la matriz resultante y se convierte el resultado a Vector para obtener una matriz de tipo Vector[Vector[Int]]
+    }
+
 
 }

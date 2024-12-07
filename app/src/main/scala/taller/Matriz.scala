@@ -36,10 +36,6 @@ class MatrizOps(){
         (v1 zip v2).map({case (i,j) => (i * j)}).sum
     }
 
-    /* def transpuesta(m:Matriz) : Matriz = {
-        val l = m.length
-        Vector.tabulate(l,l)((i,j) => m(j)(i))
-    } */
     def transpuesta(m: Matriz): Matriz = {
         val filas = m.length
         val columnas = if (filas > 0) m(0).length else 0
@@ -101,13 +97,13 @@ class MatrizOps(){
             }
         }
 
-    def multMatrizRecPar(m1: Matriz, m2: Matriz): Matriz = {
-        val n = m1.length
-        val umbral = 16  // Establecemos un umbral para evitar paralelización innecesaria en matrices pequeñas
+    def multMatrizRecPar(m1: Matriz, m2: Matriz): Matriz = {   
 
-        if (n <= umbral) {
-            // Caso base: cuando la matriz es lo suficientemente pequeña, calculamos de manera secuencial
-            multMatrizRec(m1, m2)  // Usamos la función recursiva secuencial como base
+        val n = m1.length
+        
+        // Caso base: cuando la matriz es de tamaño 1x1
+        if (n == 1) {
+            Vector(Vector(m1(0)(0) * m2(0)(0)))
         } else {
             val mid = n / 2
 

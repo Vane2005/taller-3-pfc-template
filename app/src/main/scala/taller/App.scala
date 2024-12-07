@@ -18,6 +18,7 @@ object App {
     //matrices 2x2
     val m1 = mat1.matrizAlAzar(2, 5)
     val m2 = mat1.matrizAlAzar(2, 5)
+    
 
     //matrices 4x4
     val m3 = mat1.matrizAlAzar(4, 3)
@@ -37,7 +38,7 @@ object App {
 
 
     // 10 Pruebas para la función Strassen
-    def pruebas(): Unit = {
+    /*def pruebas(): Unit = {
 
       println("Multiplicacion Strassen 32x32")
       println("Matriz 1: ")
@@ -61,31 +62,24 @@ object App {
       println("Tiempo de ejecución de Strassen: " + comp10(0))
       println("Tiempo de ejecución de Strassen Paralelo: " + comp10(1))
 
-
-    }
+    }*/
 
     // Prueba de diferencia de tiempo para el producto punto 
     def pruebasProductoPunto(): Unit = {
-      val v1 = mat1.vectorAlAzar(1000000,10)
-      val v2 = mat1.vectorAlAzar(1000000,10)
-      val v3 = mat1.vectorAlAzar(10,10)
-      val v4 = mat1.vectorAlAzar(10,10)
+      val v1 = mat1.vectorAlAzar(10000000,10)
+      val v2 = mat1.vectorAlAzar(10000000,10)
       val comp = mat1.compararProdPunto(mat1.prodPunto, mat1.prodPuntoParD)(v1, v2)
-      val comp1 = mat1.compararProdPunto(mat1.prodPunto, mat1.prodPuntoParD)(v3, v4)
-      println("Tiempo de ejecución de Producto Punto (100000): " + comp(0))
-      println("Tiempo de ejecución de Producto Punto Paralelo (100000): " + comp(1))
-      println("Tiempo de ejecución de Producto Punto (10): " + comp1(0))
-      println("Tiempo de ejecución de Producto Punto Paralelo (10): " + comp1(1))
+      println("Producto Punto (1000):")
+      println("Vector 1: " + v1.mkString(" "))
+      println("Vector 2: " + v2.mkString(" "))
+      println("Resultado Producto Punto:" + mat1.prodPunto(v1, v2))
+      println("Tiempo de ejecución de Producto Punto " + comp(0))
+      println("Tiempo de ejecución de Producto Punto Paralelo " + comp(1))
+      println("Aceleración: " + comp(2))
     }
-    /*val resultados = for {
-      i <- 1 to 10
-      m1 = mat1.matrizAlAzar(math.pow(2, i).toInt, 2)
-      m2 = mat1.matrizAlAzar(math.pow(2, i).toInt, 2)
-    } yield (mat1.compararAlgoritmos(mat1.multStrassen, mat1.multStrassenPar)(m1, m2),math.pow(2, i).toInt)
-    }*/
 
     //Pruebas - Comparación de desempeño de algoritmo de multiplicación estandar y su versión paralela
-    def pruebasMultiplicacionEstandar(): Unit = {
+    /*def pruebasMultiplicacionEstandar(): Unit = {
       println("1. Multiplicacion Estandar 32x32")
       println("Matriz 1: ")
       val E1 = mat1.matrizAlAzar(32, 32)
@@ -118,11 +112,43 @@ object App {
       val comp2 = mat1.compararAlgoritmos(mat1.multMatrizEstandarSec, mat1.multMatrizEstandarPar)(E5, E6)
       println("Tiempo de ejecución de Multiplicación Estandar: " + comp2(0))
       println("Tiempo de ejecución de Multiplicación Estandar Paralelo: " + comp2(1))
-    }
+    }*/
+  
+    /*def pruebasRec(): Unit = {
 
-    pruebasMultiplicacionEstandar()
+      val mt1 = mat1.matrizAlAzar(32, 4)
+      val mt2 = mat1.matrizAlAzar(32, 4)
+
+      println("Multiplicacion recursiva 32x32")
+      println("Matriz 1: ")
+      mt1.foreach(row => println(row))
+      println("Matriz 2: ")
+      mt2.foreach(row => println(row))
+      println("Resultado: ")
+      (mat1.multMatrizRec(mt1, mt2)).foreach(row => println(row))
+      val compa1 = mat1.compararAlgoritmos(mat1.multMatrizRec, mat1.multMatrizRecPar)(mt1, mt2)
+      println("Tiempo de ejecución de recursiva: " + compa1(0))
+      println("Tiempo de ejecución de recursiva Paralelo: " + compa1(1))
+      println("Aceleracion: " + compa1(2))
+
+      println("Multiplicacion recursiva 32x32")
+      println("Matriz 1: ")
+      mt2.foreach(row => println(row))
+      println("Matriz 2: ")
+      mt1.foreach(row => println(row))
+      println("Resultado: ")
+      (mat1.multMatrizRec(mt2, mt1)).foreach(row => println(row))
+      val compa2 = mat1.compararAlgoritmos(mat1.multMatrizRec, mat1.multMatrizRecPar)(mt2, mt1)
+      println("Tiempo de ejecución de recursiva: " + compa2(0))
+      println("Tiempo de ejecución de recursiva Paralelo: " + compa2(1))
+      println("Aceleracion: " + compa2(2))
+    }*/
+
+    /*pruebasMultiplicacionEstandar()
     pruebasProductoPunto()
     pruebas()
+    pruebasRec()*/
+    pruebasProductoPunto()
   }
 
   def greeting(): String = "Hello, world!"
