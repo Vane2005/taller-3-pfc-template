@@ -13,15 +13,59 @@ import scala.util.Random
 object App {
   def main(args: Array[String]): Unit = {
     val regado = new Regado()
-    val finca = regado.fincaAlAzar(10)  //los valores n se van cambiando para realizar las pruebas
+    val finca = regado.fincaAlAzar(5)  //los valores n se van cambiando para realizar las pruebas
     val progRiego = regado.generarProgRiegoAlAzar(10)
+
     
-    // pruebas para costoRiegoFinca
+    val finca1 = regado.fincaAlAzar(1)
+    val finca2 = regado.fincaAlAzar(1)
+
+    val finca3 = regado.fincaAlAzar(2)
+    val finca4 = regado.fincaAlAzar(2)
+
+    val finca5 = regado.fincaAlAzar(3)
+    val finca6 = regado.fincaAlAzar(3)
+
+    val finca7 = regado.fincaAlAzar(4)
+    val finca8 = regado.fincaAlAzar(4)
+
+    val finca9 = regado.fincaAlAzar(5)
+    val finca10 = regado.fincaAlAzar(5)
+
+    //Pruebas para costoRiegoFinca
     def pruebas1(): Unit = {
       val comp = regado.compararCostoRiegoFinca(regado.costoRiegoFinca, regado.costoRiegoFincaPar)(finca, progRiego)
       println("Secuencial: " + comp(0))
       println("Paralelo: " + comp(1))
     }
+
+    def imprimirVectorFormateado(vector: Vector[Vector[Int]]): String = {
+      vector.zipWithIndex.map { case (subVector, index) =>
+        s"  $index: " + subVector.mkString("(", ", ", ")")
+      }.mkString("\n")
+    }
+
+    //Pruebas para generarProgramacionesRiego
+
+    def pruebas2(): Unit = {
+      println("finca9: \n" + imprimirVectorFormateado(finca9.map { case (a, b, c) => Vector(a, b, c) }))
+      println("Programación de riego con secuencial:\n" + regado.generarProgramacionesRiego(finca9))
+      println("Programación de riego con paralela: \n" + regado.generarProgramacionesRiegoPar(finca9))
+      val comp1 = regado.compararGenerarProgramacionesRiego(regado.generarProgramacionesRiego, regado.generarProgramacionesRiegoPar)(finca9)
+      println("Secuencial: " + comp1(0))
+      println("Paralelo: " + comp1(1))
+      println("Aceleración: " + comp1(2))
+
+
+      println("\nfinca10: \n" + imprimirVectorFormateado(finca10.map { case (a, b, c) => Vector(a, b, c) }))
+      println("Programación de riego con secuencial:\n" + regado.generarProgramacionesRiego(finca10))
+      println("Programación de riego con paralela: \n" + regado.generarProgramacionesRiegoPar(finca10))
+      val comp2 = regado.compararGenerarProgramacionesRiego(regado.generarProgramacionesRiego, regado.generarProgramacionesRiegoPar)(finca10)
+      println("Secuencial: " + comp1(0))
+      println("Paralelo: " + comp1(1))
+      println("Aceleración: " + comp1(2))
+    }
+    pruebas2()
 
   }
 

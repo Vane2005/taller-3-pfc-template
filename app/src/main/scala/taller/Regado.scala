@@ -149,7 +149,7 @@ class Regado() {
         List(tiempoSeq.value, tiempoPar.value, tiempoSeq.value / tiempoPar.value)
     }
 
-    def compararGenerarProgramacionesRiego(seq : (Finca) => Vector[ProgRiego],par : (Finca) => Vector[ProgRiego])(finca : Finca): List[Double] = {
+    def compararGenerarProgramacionesRiego(seq : (Finca) => Vector[ProgRiego], par : (Finca) => Vector[ProgRiego])(finca : Finca): List[Double] = {
         val tiempoSeq = withWarmer(new Default) measure{seq(finca)}
         val tiempoPar = withWarmer(new Default) measure{par(finca)}
 
