@@ -649,4 +649,14 @@ class RegadoTest extends AnyFunSuite {
     assert(objregado.costoRiegoFinca(finca3, Vector(0, 1, 2, 3, 4)) == 60)
     assert(objregado.costoRiegoFinca(finca6, Vector(0, 1)) == 7)
   }
+  test("Genera costoMovilidadPar"){
+    val distancia1 = Vector(Vector(0, 1, 2), Vector(1, 0, 3), Vector(2, 3, 0))
+    val distancia2 = Vector(Vector(0, 1, 2, 3), Vector(1, 0, 4, 5), Vector(2, 4, 0, 6), Vector(3, 5, 6, 0))
+    val distancia3 = Vector(Vector(0, 1, 2, 3, 4), Vector(1, 0, 5, 6, 7), Vector(2, 5, 0, 8, 9), Vector(3, 6, 8, 0, 10), Vector(4, 7, 9, 10, 0))
+
+    assert(objregado.costoMovilidadPar(finca1, Vector(0, 1, 2), distancia1) == 4)
+    assert(objregado.costoMovilidadPar(finca2, Vector(0, 1, 2, 3), distancia2) == 11)
+    assert(objregado.costoMovilidadPar(finca3, Vector(0, 1, 2, 3, 4), distancia3) == 24)
+
+  }
 }
