@@ -100,7 +100,7 @@ class Regado() {
         val costos = programaciones.map(pi => 
             (pi, costoRiegoFinca(f, pi) + costoMovilidad(f, pi, d))
         )
-        costos.minBy(_._2)
+        costos.minBy(_._2) 
     }
 
 

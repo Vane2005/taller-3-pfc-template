@@ -633,4 +633,20 @@ class RegadoTest extends AnyFunSuite {
       Vector(1, 0, 2), Vector(1, 2, 0), 
       Vector(2, 0, 1), Vector(2, 1, 0)))
   }
+
+
+  test("genera costoRiegoTablon"){
+    assert(objregado.costoRiegoTablon(0, finca1, Vector(0, 1, 2)) == 8)
+    assert(objregado.costoRiegoTablon(1, finca2, Vector(0, 1, 2, 3)) == 7)
+    assert(objregado.costoRiegoTablon(2, finca3, Vector(0, 1, 2, 3, 4)) == 11)
+    assert(objregado.costoRiegoTablon(0, finca6, Vector(0, 1)) == 7)
+    assert(objregado.costoRiegoTablon(1, finca7, Vector(0, 1, 2)) == 12)
+    assert(objregado.costoRiegoTablon(2, finca7, Vector(0, 1, 2)) == 5)
+  }
+  test("genera costoRiegoFinca"){
+    assert(objregado.costoRiegoFinca(finca1, Vector(0, 1, 2)) == 14)
+    assert(objregado.costoRiegoFinca(finca2, Vector(0, 1, 2, 3)) == 28)
+    assert(objregado.costoRiegoFinca(finca3, Vector(0, 1, 2, 3, 4)) == 60)
+    assert(objregado.costoRiegoFinca(finca6, Vector(0, 1)) == 7)
+  }
 }
