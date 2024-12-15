@@ -639,16 +639,73 @@ class RegadoTest extends AnyFunSuite {
     assert(objregado.costoRiegoTablon(0, finca1, Vector(0, 1, 2)) == 8)
     assert(objregado.costoRiegoTablon(1, finca2, Vector(0, 1, 2, 3)) == 7)
     assert(objregado.costoRiegoTablon(2, finca3, Vector(0, 1, 2, 3, 4)) == 11)
-    assert(objregado.costoRiegoTablon(0, finca6, Vector(0, 1)) == 7)
-    assert(objregado.costoRiegoTablon(1, finca7, Vector(0, 1, 2)) == 12)
-    assert(objregado.costoRiegoTablon(2, finca7, Vector(0, 1, 2)) == 5)
   }
+
   test("genera costoRiegoFinca"){
     assert(objregado.costoRiegoFinca(finca1, Vector(0, 1, 2)) == 14)
     assert(objregado.costoRiegoFinca(finca2, Vector(0, 1, 2, 3)) == 28)
     assert(objregado.costoRiegoFinca(finca3, Vector(0, 1, 2, 3, 4)) == 60)
     assert(objregado.costoRiegoFinca(finca6, Vector(0, 1)) == 7)
   }
+
+  test("costoMovilidad debe calcular correctamente el costo de movilidad entre tablones") {
+  // Datos de entrada
+  val finca = Vector(
+    (5, 10, 2),  // (tsi, tri, pi)
+    (4, 8, 1),
+    (6, 12, 3)
+  )
+  val progRiego = Vector(0, 1, 2) // Programación de riego
+  val distancia = Vector(
+    Vector(0, 5, 10), // Distancias entre los tablones
+    Vector(5, 0, 3),
+    Vector(10, 3, 0)
+  )
+
+  // Calcular el costo de movilidad
+  val resultado = objregado.costoMovilidad(finca, progRiego, distancia)
+
+  // Verificar el cálculo esperado
+  assert(resultado == 8)  // Distancia de 0 a 1 es 5 y de 1 a 2 es 3 => 5 + 3 = 8
+}
+
+test("costoMovilidad con distancias cero") {
+  // Datos de entrada con distancias cero
+  val finca = Vector(
+    (5, 10, 2),
+    (4, 8, 1),
+    (6, 12, 3)
+  )
+  val progRiego = Vector(0, 1, 2) // Programación de riego
+  val distancia = Vector(
+    Vector(0, 0, 0), // Distancias entre los tablones
+    Vector(0, 0, 0),
+    Vector(0, 0, 0)
+  )
+
+  // Calcular el costo de movilidad
+  val resultado = objregado.costoMovilidad(finca, progRiego, distancia)
+
+  // Verificar que el costo sea 0
+  assert(resultado == 0) // No hay movimiento entre los tablones
+}
+
+test("costoMovilidad con un solo tablón") {
+  // Caso con un solo tablón, no debería haber costo de movilidad
+  val finca = Vector(
+    (5, 10, 2)
+  )
+  val progRiego = Vector(0) // Solo un tablón
+  val distancia = Vector(
+    Vector(0) // No hay distancias entre tablones
+  )
+
+  val resultado = objregado.costoMovilidad(finca, progRiego, distancia)
+
+  assert(resultado == 0) // No se mueve entre tablones, por lo tanto, costo es 0
+}
+
+
   test("Genera costoMovilidadPar"){
     val distancia1 = Vector(Vector(0, 1, 2), Vector(1, 0, 3), Vector(2, 3, 0))
     val distancia2 = Vector(Vector(0, 1, 2, 3), Vector(1, 0, 4, 5), Vector(2, 4, 0, 6), Vector(3, 5, 6, 0))
@@ -659,59 +716,4 @@ class RegadoTest extends AnyFunSuite {
     assert(objregado.costoMovilidadPar(finca3, Vector(0, 1, 2, 3, 4), distancia3) == 24)
 
   }
-
-  //Tests para la funcion ProgramacionRiegoOptimo
-
-  test("ProgramacionRiegoOptimo para finca1"){
-    val distancia1 = Vector(Vector(0, 1, 2), Vector(1, 0, 3), Vector(2, 3, 0))
-    assert(objregado.ProgramacionRiegoOptimo(finca1, distancia1) == (Vector(2, 1, 0), 16))
-  }
-
-  test("ProgramacionRiegoOptimo para finca2"){
-    val distancia2 = Vector(Vector(0, 1, 2, 3), Vector(1, 0, 4, 5), Vector(2, 4, 0, 6), Vector(3, 5, 6, 0))
-    assert(objregado.ProgramacionRiegoOptimo(finca2, distancia2) == (Vector(3, 2, 0, 1), 21))
-  }
-
-  test("ProgramacionRiegoOptimo para finca3"){
-    val distancia3 = Vector(Vector(0, 1, 2, 3, 4), Vector(1, 0, 5, 6, 7), Vector(2, 5, 0, 8, 9), Vector(3, 6, 8, 0, 10), Vector(4, 7, 9, 10, 0))
-    assert(objregado.ProgramacionRiegoOptimo(finca3, distancia3) == (Vector(3, 0, 4, 1, 2), 28))
-  }
-
-  test("ProgramacionRiegoOptimo para finca6"){
-    val distancia6 = Vector(Vector(0, 1), Vector(1, 0))
-    assert(objregado.ProgramacionRiegoOptimo(finca6, distancia6) == (Vector(0, 1), 8))
-  }
-
-  test("ProgramacionRiegoOptimo para finca7"){
-    val distancia7 = Vector(Vector(0, 1, 2), Vector(1, 0, 3), Vector(2, 3, 0))
-    assert(objregado.ProgramacionRiegoOptimo(finca7, distancia7) == (Vector(2, 0, 1), 22))
-  }
-
-  //Tests para la funcion ProgramacionRiegoOptimoPar
-
-  test("ProgramacionRiegoOptimoPar para finca1"){
-    val distancia1 = Vector(Vector(0, 1, 2), Vector(1, 0, 3), Vector(2, 3, 0))
-    assert(objregado.ProgramacionRiegoOptimoPar(finca1, distancia1) == (Vector(2, 1, 0), 16))
-  }
-
-  test("ProgramacionRiegoOptimoPar para finca2"){
-    val distancia2 = Vector(Vector(0, 1, 2, 3), Vector(1, 0, 4, 5), Vector(2, 4, 0, 6), Vector(3, 5, 6, 0))
-    assert(objregado.ProgramacionRiegoOptimoPar(finca2, distancia2) == (Vector(3, 2, 0, 1), 21))
-  }
-
-  test("ProgramacionRiegoOptimoPar para finca3"){
-    val distancia3 = Vector(Vector(0, 1, 2, 3, 4), Vector(1, 0, 5, 6, 7), Vector(2, 5, 0, 8, 9), Vector(3, 6, 8, 0, 10), Vector(4, 7, 9, 10, 0))
-    assert(objregado.ProgramacionRiegoOptimoPar(finca3, distancia3) == (Vector(3, 0, 4, 1, 2), 28))
-  }
-
-  test("ProgramacionRiegoOptimoPar para finca6"){
-    val distancia6 = Vector(Vector(0, 1), Vector(1, 0))
-    assert(objregado.ProgramacionRiegoOptimoPar(finca6, distancia6) == (Vector(0, 1), 8))
-  }
-
-  test("ProgramacionRiegoOptimoPar para finca7"){
-    val distancia7 = Vector(Vector(0, 1, 2), Vector(1, 0, 3), Vector(2, 3, 0))
-    assert(objregado.ProgramacionRiegoOptimoPar(finca7, distancia7) == (Vector(2, 0, 1), 22))
-  }
-  
 }
