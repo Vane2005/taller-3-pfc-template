@@ -19,23 +19,18 @@ object App {
     
     val finca1 = regado.fincaAlAzar(1)
     val finca2 = regado.fincaAlAzar(1)
-    val distancia1 = regado.distanciaAlAzar(1)
 
     val finca3 = regado.fincaAlAzar(2)
     val finca4 = regado.fincaAlAzar(2)
-    val distancia2 = regado.distanciaAlAzar(2)
 
     val finca5 = regado.fincaAlAzar(3)
     val finca6 = regado.fincaAlAzar(3)
-    val distancia3 = regado.distanciaAlAzar(3)
 
     val finca7 = regado.fincaAlAzar(4)
     val finca8 = regado.fincaAlAzar(4)
-    val distancia4 = regado.distanciaAlAzar(4)
 
     val finca9 = regado.fincaAlAzar(5)
     val finca10 = regado.fincaAlAzar(5)
-    val distancia5 = regado.distanciaAlAzar(5)
 
     //Pruebas para costoRiegoFinca
     def pruebas1(): Unit = {
@@ -49,7 +44,7 @@ object App {
         s"  $index: " + subVector.mkString("(", ", ", ")")
       }.mkString("\n")
     }
-    /*
+
     //Pruebas para generarProgramacionesRiego
 
     def pruebas2(): Unit = {
@@ -69,34 +64,73 @@ object App {
       println("Secuencial: " + comp1(0))
       println("Paralelo: " + comp1(1))
       println("Aceleración: " + comp1(2))
-
-    
-    }*/
-    //Pruebas para ProgramacionRiegoOptimo
-
-    def pruebas3(): Unit = {
-      println("finca1: \n" + imprimirVectorFormateado(finca1.map { case (a, b, c) => Vector(a, b, c) }))
-      println("Programación de riego con secuencial:\n" + regado.ProgramacionRiegoOptimo(finca1, distancia1))
-      println("Programación de riego con paralela: \n" + regado.ProgramacionRiegoOptimoPar(finca1, distancia1))
-      val comp1 = regado.compararProgramacionRiegoOptimo(regado.ProgramacionRiegoOptimo, regado.ProgramacionRiegoOptimoPar)(finca1, distancia1)
-      println("Secuencial: " + comp1(0))
-      println("Paralelo: " + comp1(1))
-      println("Aceleración: " + comp1(2))
-
-      println("finca2: \n" + imprimirVectorFormateado(finca2.map { case (a, b, c) => Vector(a, b, c) }))
-      println("Programación de riego con secuencial:\n" + regado.ProgramacionRiegoOptimo(finca2, distancia1))
-      println("Programación de riego con paralela: \n" + regado.ProgramacionRiegoOptimoPar(finca2, distancia1))
-      val comp2 = regado.compararProgramacionRiegoOptimo(regado.ProgramacionRiegoOptimo, regado.ProgramacionRiegoOptimoPar)(finca2, distancia1)
-      println("Secuencial: " + comp2(0))
-      println("Paralelo: " + comp2(1))
-      println("Aceleración: " + comp2(2))
-
     }
-    /*pruebas1()
-    pruebas2()*/
-    pruebas3()
-  }
-  
+    pruebas2()
 
-    def greeting(): String = "Hello, world!"
+
+    // Pruebas de costoRiegoTablon
+    def pruebasCostoRiegoTablon(): Unit = {
+      val finca1 = regado.fincaAlAzar(1)
+      val finca2 = regado.fincaAlAzar(2)
+      val finca3 = regado.fincaAlAzar(3)
+      val finca4 = regado.fincaAlAzar(4)
+      val finca5 = regado.fincaAlAzar(5)
+
+      println("\n== Pruebas de costoRiegoTablon ==")
+      regado.costoRiegoTablon(0, finca1, regado.generarProgRiegoAlAzar(1))
+      regado.costoRiegoTablon(0, finca2, regado.generarProgRiegoAlAzar(2))
+      regado.costoRiegoTablon(0, finca3, regado.generarProgRiegoAlAzar(3))
+      regado.costoRiegoTablon(0, finca4, regado.generarProgRiegoAlAzar(4))
+      regado.costoRiegoTablon(0, finca5, regado.generarProgRiegoAlAzar(5))
+    }
+    pruebasCostoRiegoTablon()
+
+    // Pruebas de costoMovilidad
+    def pruebasCostoMovilidad(): Unit = {
+      val finca1 = regado.fincaAlAzar(1)
+      val finca2 = regado.fincaAlAzar(2)
+      val finca3 = regado.fincaAlAzar(3)
+      val finca4 = regado.fincaAlAzar(4)
+      val finca5 = regado.fincaAlAzar(5)
+      val distancia1 = regado.distanciaAlAzar(1)
+      val distancia2 = regado.distanciaAlAzar(2)
+      val distancia3 = regado.distanciaAlAzar(3)
+      val distancia4 = regado.distanciaAlAzar(4)
+      val distancia5 = regado.distanciaAlAzar(5)
+
+      println("\n== Pruebas de costoMovilidad ==")
+      regado.costoMovilidad(finca1, regado.generarProgRiegoAlAzar(1), distancia1)
+      regado.costoMovilidad(finca2, regado.generarProgRiegoAlAzar(2), distancia2)
+      regado.costoMovilidad(finca3, regado.generarProgRiegoAlAzar(3), distancia3)
+      regado.costoMovilidad(finca4, regado.generarProgRiegoAlAzar(4), distancia4)
+      regado.costoMovilidad(finca5, regado.generarProgRiegoAlAzar(5), distancia5)
+    }
+
+    //pruebasCostoMovilidad()
+
+    // Pruebas de costoMovilidadPar
+    def pruebasCostoMovilidadPar(): Unit = {
+      val finca1 = regado.fincaAlAzar(1)
+      val finca2 = regado.fincaAlAzar(2)
+      val finca3 = regado.fincaAlAzar(3)
+      val finca4 = regado.fincaAlAzar(4)
+      val finca5 = regado.fincaAlAzar(5)
+      val distancia1 = regado.distanciaAlAzar(1)
+      val distancia2 = regado.distanciaAlAzar(2)
+      val distancia3 = regado.distanciaAlAzar(3)
+      val distancia4 = regado.distanciaAlAzar(4)
+      val distancia5 = regado.distanciaAlAzar(5)
+
+      println("\n== Pruebas de costoMovilidadPar ==")
+      regado.costoMovilidadPar(finca1, regado.generarProgRiegoAlAzar(1), distancia1)
+      regado.costoMovilidadPar(finca2, regado.generarProgRiegoAlAzar(2), distancia2)
+      regado.costoMovilidadPar(finca3, regado.generarProgRiegoAlAzar(3), distancia3)
+      regado.costoMovilidadPar(finca4, regado.generarProgRiegoAlAzar(4), distancia4)
+      regado.costoMovilidadPar(finca5, regado.generarProgRiegoAlAzar(5), distancia5)
+    }
+
+    //pruebasCostoMovilidadPar()
+  }
+
+  def greeting(): String = "Hello, world!"
 }
