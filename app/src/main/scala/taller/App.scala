@@ -77,60 +77,39 @@ object App {
       val finca5 = regado.fincaAlAzar(5)
 
       println("\n== Pruebas de costoRiegoTablon ==")
-      regado.costoRiegoTablon(0, finca1, regado.generarProgRiegoAlAzar(1))
-      regado.costoRiegoTablon(0, finca2, regado.generarProgRiegoAlAzar(2))
-      regado.costoRiegoTablon(0, finca3, regado.generarProgRiegoAlAzar(3))
-      regado.costoRiegoTablon(0, finca4, regado.generarProgRiegoAlAzar(4))
-      regado.costoRiegoTablon(0, finca5, regado.generarProgRiegoAlAzar(5))
+      println(regado.costoRiegoTablon(0, finca1, regado.generarProgRiegoAlAzar(1)))
+      println(regado.costoRiegoTablon(0, finca2, regado.generarProgRiegoAlAzar(2)))
+      println(regado.costoRiegoTablon(0, finca3, regado.generarProgRiegoAlAzar(3)))
+      println(regado.costoRiegoTablon(0, finca4, regado.generarProgRiegoAlAzar(4)))
+      println(regado.costoRiegoTablon(0, finca5, regado.generarProgRiegoAlAzar(5)))
     }
     pruebasCostoRiegoTablon()
+    pruebasCostoMovilidad(regado)
 
-    // Pruebas de costoMovilidad
-    def pruebasCostoMovilidad(): Unit = {
-      val finca1 = regado.fincaAlAzar(1)
-      val finca2 = regado.fincaAlAzar(2)
-      val finca3 = regado.fincaAlAzar(3)
-      val finca4 = regado.fincaAlAzar(4)
-      val finca5 = regado.fincaAlAzar(5)
-      val distancia1 = regado.distanciaAlAzar(1)
-      val distancia2 = regado.distanciaAlAzar(2)
-      val distancia3 = regado.distanciaAlAzar(3)
-      val distancia4 = regado.distanciaAlAzar(4)
-      val distancia5 = regado.distanciaAlAzar(5)
-
-      println("\n== Pruebas de costoMovilidad ==")
-      regado.costoMovilidad(finca1, regado.generarProgRiegoAlAzar(1), distancia1)
-      regado.costoMovilidad(finca2, regado.generarProgRiegoAlAzar(2), distancia2)
-      regado.costoMovilidad(finca3, regado.generarProgRiegoAlAzar(3), distancia3)
-      regado.costoMovilidad(finca4, regado.generarProgRiegoAlAzar(4), distancia4)
-      regado.costoMovilidad(finca5, regado.generarProgRiegoAlAzar(5), distancia5)
-    }
-
-    //pruebasCostoMovilidad()
-
-    // Pruebas de costoMovilidadPar
-    def pruebasCostoMovilidadPar(): Unit = {
-      val finca1 = regado.fincaAlAzar(1)
-      val finca2 = regado.fincaAlAzar(2)
-      val finca3 = regado.fincaAlAzar(3)
-      val finca4 = regado.fincaAlAzar(4)
-      val finca5 = regado.fincaAlAzar(5)
-      val distancia1 = regado.distanciaAlAzar(1)
-      val distancia2 = regado.distanciaAlAzar(2)
-      val distancia3 = regado.distanciaAlAzar(3)
-      val distancia4 = regado.distanciaAlAzar(4)
-      val distancia5 = regado.distanciaAlAzar(5)
-
-      println("\n== Pruebas de costoMovilidadPar ==")
-      regado.costoMovilidadPar(finca1, regado.generarProgRiegoAlAzar(1), distancia1)
-      regado.costoMovilidadPar(finca2, regado.generarProgRiegoAlAzar(2), distancia2)
-      regado.costoMovilidadPar(finca3, regado.generarProgRiegoAlAzar(3), distancia3)
-      regado.costoMovilidadPar(finca4, regado.generarProgRiegoAlAzar(4), distancia4)
-      regado.costoMovilidadPar(finca5, regado.generarProgRiegoAlAzar(5), distancia5)
-    }
-
-    //pruebasCostoMovilidadPar()
   }
 
-  def greeting(): String = "Hello, world!"
+  def pruebasCostoMovilidad(regado: Regado): Unit = {
+  println("\n== Pruebas de Costo Movilidad ==")
+  
+  (1 to 10).foreach { size =>
+      val finca = regado.fincaAlAzar(size) // Genera una finca con 'size' tablones
+      val progRiego = regado.generarProgRiegoAlAzar(size) // Genera la programación de riego
+      val distancias = regado.distanciaAlAzar(size) // Genera la matriz de distancias
+
+      val resultados = regado.compararCostoMovilidad(
+        regado.costoMovilidad, regado.costoMovilidadPar)(finca, progRiego, distancias)
+
+      val tiempoSec = resultados(0)
+      val tiempoPar = resultados(1)
+      val aceleracion = resultados(2)
+      val aceleracionPorcentaje = (aceleracion - 1) * 100
+
+      // Mostrar resultados como texto
+      println(s"\nPrueba $size:")
+      println(f"Tamaño de la finca: $size")
+      println(f"Tiempo secuencial: $tiempoSec%.2f ms")
+      println(f"Tiempo paralelo: $tiempoPar%.2f ms")
+      println(f"Aceleración: $aceleracion%.2f (${aceleracionPorcentaje}%.2f%%)")
+    }
+  }
 }
